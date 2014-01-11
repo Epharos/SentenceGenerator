@@ -1,0 +1,23 @@
+package fr;
+
+public class Main 
+{
+	public static void main(String[] args) 
+	{
+		Verb.registerVerbs();
+		Subject.registerSubjects();
+		Adjective.registerAdjectives();
+		
+		Sentence s = new Sentence();
+		
+		for(int i = 0 ; i < 15 ; i++)
+		{
+			pr(s.getString());
+		}
+	}
+	
+	public static void pr(String s)
+	{
+		System.out.println(s);
+	}
+}
