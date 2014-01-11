@@ -1,0 +1,13 @@
+package fr;
+
+import java.util.*;
+
+public class Adverb 
+{
+	public List<String> adverb = new ArrayList<String>();
+	
+	public Adverb()
+	{
+		
+	}
+}
