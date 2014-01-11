@@ -1,0 +1,70 @@
+package fr;
+
+import java.util.Random;
+
+public class Sentence
+{
+	public String getString()
+	{
+		Random rand = new Random();
+		
+		Determinant d = new Determinant();
+		String det = d.getDeterminant();
+		
+		String s = "";
+		Subject sub = Subject.getRandomSubject();
+		
+		if(det.equals("il") || det.equals("elle"))
+		{
+			if(rand.nextBoolean())
+			{
+				s = s.concat(det);
+			}
+			else
+			{
+				if(rand.nextBoolean())
+				{
+					s = sub.theA(rand, false, sub.getSubjectName(false)) + sub.getSubjectName(false);
+				}
+				else
+				{
+					String s1 = Adjective.getRandomAdjective().getAdjective(sub.genre == Genre.FEM, false);
+					s = sub.theA(rand, false, s1) + s1 + " " + sub.getSubjectName(false);
+				}
+			}
+		}
+		else if(det.equals("ils") || det.equals("elles"))
+		{
+			if(rand.nextBoolean())
+			{
+				s = s.concat(det);
+			}
+			else
+			{
+				if(rand.nextBoolean())
+				{
+					s = sub.theA(rand, true, sub.getSubjectName(true)) + sub.getSubjectName(true);
+				}
+				else
+				{
+					String s1 = Adjective.getRandomAdjective().getAdjective(sub.genre == Genre.FEM, true);
+					s = sub.theA(rand, true, s1) + s1 + " " + sub.getSubjectName(true);
+				}
+			}
+		}
+		else
+		{
+			s = s.concat(det);
+		}
+		
+		Verb verb = null;
+		
+		do
+		{
+			verb = VerbList.verbs.get(rand.nextInt(VerbList.verbs.size()));
+		}
+		while(!verb.isAvailable(sub));
+		
+		return String.valueOf(s.charAt(0)).toUpperCase() + s.substring(1) + " " + verb.getRandomlyTemp(det, rand.nextBoolean()) + ".";
+	}
+}
