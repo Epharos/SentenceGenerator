@@ -1,0 +1,50 @@
+package fr;
+
+import java.util.*;
+
+public class Adjective 
+{
+	public static List<Adjective> adjectives = new ArrayList<Adjective>();
+	
+	public String adjective;
+	
+	public String[] allowedSubject;
+	
+	public boolean before = true;
+	
+	public Adjective(String name)
+	{
+		this.adjective = name;
+	}
+	
+	public Adjective setAfter()
+	{
+		this.before = false;
+		return this;
+	}
+	
+	public boolean formatFem(boolean isFem)
+	{
+		return !this.adjective.endsWith("e") && isFem;
+	}
+	
+	public String getAdjective(boolean isFem, boolean isPluriel)
+	{
+		return this.adjective + (this.formatFem(isFem) ? "e" : "") + (isPluriel ? "s" : "");
+	}
+	
+	public static Adjective getRandomAdjective()
+	{
+		Random rand = new Random();
+		
+		return adjectives.get(rand.nextInt(adjectives.size()));
+	}
+	
+	public static void registerAdjectives()
+	{
+		adjectives.add(new Adjective("petit"));
+		adjectives.add(new Adjective("grand"));
+		adjectives.add(new Adjective("bleu").setAfter());
+		adjectives.add(new Adjective("rapide").setAfter());
+	}
+}
