@@ -1,0 +1,232 @@
+package fr;
+
+import java.util.Random;
+
+public class Verb extends Word
+{
+	public String[] present = new String[6];
+	public String[] imparfait = new String[6];
+	public String[] futurSimple = new String[6];
+	public String verb;
+	public VerbType[] verbType = { VerbType.OBJECTS };
+	
+	public Verb(String name)
+	{
+		this.verb = name;
+	}
+	
+	public Verb setType(VerbType ... vt)
+	{
+		this.verbType = vt;
+		return this;
+	}
+	
+	public Verb setPresent(String je, String tu, String il,
+			String nous, String vous, String ils)
+	{
+		this.present[0] = je;
+		this.present[1] = tu;
+		this.present[2] = il;
+		this.present[3] = nous;
+		this.present[4] = vous;
+		this.present[5] = ils;
+		return this;
+	}
+	
+	public Verb setImparfait(String je, String tu, String il,
+			String nous, String vous, String ils)
+	{
+		this.imparfait[0] = je;
+		this.imparfait[1] = tu;
+		this.imparfait[2] = il;
+		this.imparfait[3] = nous;
+		this.imparfait[4] = vous;
+		this.imparfait[5] = ils;
+		return this;
+	}
+	
+	public String getRandomlyTemp(String pronoun, boolean negative)
+	{
+		int temp = 2;
+		Random rand = new Random();
+		
+		switch(rand.nextInt(temp) + 1)
+		{
+		case 1 :
+			return this.getPresent(pronoun, negative);
+		case 2 :
+			return this.getImparfait(pronoun, negative);
+		default :
+			return this.getPresent(pronoun, negative);
+		}
+	}
+	
+	public String getPresent(String pronoun, boolean negative)
+	{
+		switch(pronoun)
+		{
+		case "je" :
+			return (negative ? (Logic.startWithVoyelle(this.present[0]) ? "n\'" : "ne ") : "") + this.present[0] + (negative ? " pas" : "");
+		case "tu" :
+			return (negative ? (Logic.startWithVoyelle(this.present[1]) ? "n\'" : "ne ") : "") + this.present[1] + (negative ? " pas" : "");
+		case "il" :
+			return (negative ? (Logic.startWithVoyelle(this.present[2]) ? "n\'" : "ne ") : "") + this.present[2] + (negative ? " pas" : "");
+		case "elle" :
+			return (negative ? (Logic.startWithVoyelle(this.present[2]) ? "n\'" : "ne ") : "") + this.present[2] + (negative ? " pas" : "");
+		case "on" :
+			return (negative ? (Logic.startWithVoyelle(this.present[2]) ? "n\'" : "ne ") : "") + this.present[2] + (negative ? " pas" : "");
+		case "nous" :
+			return (negative ? (Logic.startWithVoyelle(this.present[3]) ? "n\'" : "ne ") : "") + this.present[3] + (negative ? " pas" : "");
+		case "vous" :
+			return (negative ? (Logic.startWithVoyelle(this.present[4]) ? "n\'" : "ne ") : "") + this.present[4] + (negative ? " pas" : "");
+		case "ils" :
+			return (negative ? (Logic.startWithVoyelle(this.present[5]) ? "n\'" : "ne ") : "") + this.present[5] + (negative ? " pas" : "");
+		case "elles" :
+			return (negative ? (Logic.startWithVoyelle(this.present[5]) ? "n\'" : "ne ") : "") + this.present[5] + (negative ? " pas" : "");
+		default :
+			return (negative ? (Logic.startWithVoyelle("unknown") ? "n\'" : "ne ") : "") + "unknown" + (negative ? " pas" : "");
+		}
+	}
+	
+	public String getImparfait(String pronoun, boolean negative)
+	{
+		switch(pronoun)
+		{
+		case "je" :
+			return (negative ? (Logic.startWithVoyelle(this.imparfait[0]) ? "n\'" : "ne ") : "") + this.imparfait[0] + (negative ? " pas" : "");
+		case "tu" :
+			return (negative ? (Logic.startWithVoyelle(this.imparfait[1]) ? "n\'" : "ne ") : "") + this.imparfait[1] + (negative ? " pas" : "");
+		case "il" :
+			return (negative ? (Logic.startWithVoyelle(this.imparfait[2]) ? "n\'" : "ne ") : "") + this.imparfait[2] + (negative ? " pas" : "");
+		case "elle" :
+			return (negative ? (Logic.startWithVoyelle(this.imparfait[2]) ? "n\'" : "ne ") : "") + this.imparfait[2] + (negative ? " pas" : "");
+		case "on" :
+			return (negative ? (Logic.startWithVoyelle(this.imparfait[2]) ? "n\'" : "ne ") : "") + this.imparfait[2] + (negative ? " pas" : "");
+		case "nous" :
+			return (negative ? (Logic.startWithVoyelle(this.imparfait[3]) ? "n\'" : "ne ") : "") + this.imparfait[3] + (negative ? " pas" : "");
+		case "vous" :
+			return (negative ? (Logic.startWithVoyelle(this.imparfait[4]) ? "n\'" : "ne ") : "") + this.imparfait[4] + (negative ? " pas" : "");
+		case "ils" :
+			return (negative ? (Logic.startWithVoyelle(this.imparfait[5]) ? "n\'" : "ne ") : "") + this.imparfait[5] + (negative ? " pas" : "");
+		case "elles" :
+			return (negative ? (Logic.startWithVoyelle(this.imparfait[5]) ? "n\'" : "ne ") : "") + this.imparfait[5] + (negative ? " pas" : "");
+		default :
+			return (negative ? (Logic.startWithVoyelle("unknown") ? "n\'" : "ne ") : "") + "unknown" + (negative ? " pas" : "");
+		}
+	}
+	
+	public boolean isAvailable(Subject s)
+	{
+		boolean b = false;
+		
+		if(s.exeptedVerbNotAllowed != null)
+		{
+			if(s.exeptedVerbNotAllowed.length > 0)
+			{
+				for(int j = 0 ; j < s.exeptedVerbNotAllowed.length ; j++)
+				{
+					if(this.verb.equals(s.exeptedVerbNotAllowed[j]))
+					{
+						return false;
+					}
+				}
+			}
+		}
+		
+		if(s.exeptedVerbAllowed != null)
+		{
+			if(s.exeptedVerbAllowed.length > 0)
+			{
+				for(int j = 0 ; j < s.exeptedVerbAllowed.length ; j++)
+				{
+					if(this.verb.equals(s.exeptedVerbAllowed[j]))
+					{
+						return true;
+					}
+				}
+			}
+		}
+		
+		if(this.verbType != null)
+		{
+			for(int i = 0 ; i < this.verbType.length ; i++)
+			{
+				if(s.type != null)
+				{
+					if(s.type.length > 0)
+					{
+						for(int j = 0 ; j < s.type.length ; j++)
+						{
+							if(this.verbType[i].equals(s.type[j]))
+							{
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return b;
+	}
+	
+	public static void registerVerbs()
+	{
+		VerbList.verbs.clear();
+		
+		VerbList.verbs.add(new Verb("chanter").setType(VerbType.HUMANS)
+				.setPresent("chante", "chantes", "chante", "chantons", "chantez", "chantent")
+				.setImparfait("chantais", "chantais", "chantait", "chantions", "chantiez", "chantaient"));
+		VerbList.verbs.add(new Verb("dormir").setType(VerbType.HUMANS, VerbType.ANIMALS)
+				.setPresent("dors", "dors", "dort", "dormons", "dormez", "dorment")
+				.setImparfait("dormais", "dormais", "dormait", "dormions", "dormiez", "dormaient"));
+		VerbList.verbs.add(new Verb("manger").setType(VerbType.HUMANS, VerbType.ANIMALS)
+				.setPresent("mange", "manges", "mange", "mangeons", "mangez", "mangent")
+				.setImparfait("mangeais", "mangeais", "mangeait", "mangions", "mangiez", "mangeaient"));
+		VerbList.verbs.add(new Verb("jouer").setType(VerbType.HUMANS, VerbType.ANIMALS)
+				.setPresent("joue", "joues", "joue", "jouons", "jouez", "jouent")
+				.setImparfait("jouais", "jouais", "jouait", "jouions", "jouiez", "jouaient"));
+		VerbList.verbs.add(new Verb("brûler").setType(VerbType.HUMANS, VerbType.ANIMALS, VerbType.BUILDINGS, VerbType.OBJECTS)
+				.setPresent("brûle", "brûles", "brûle", "brûlons", "brûlez", "brûlent")
+				.setImparfait("brûlais", "brûlais", "brûlait", "brûlions", "brûliez", "brûlaient"));
+		VerbList.verbs.add(new Verb("tomber").setType(VerbType.HUMANS, VerbType.ANIMALS, VerbType.OBJECTS)
+				.setPresent("tombe", "tombes", "tombe", "tombons", "tombez", "tombent")
+				.setImparfait("tombais", "tombais", "tombait", "tombions", "tombiez", "tombaient"));
+		VerbList.verbs.add(new Verb("parler").setType(VerbType.HUMANS)
+				.setPresent("parle", "parles", "parle", "parlons", "parlez", "parlent")
+				.setImparfait("parlais", "parlais", "parlait", "parlions", "parliez", "parlaient"));
+		VerbList.verbs.add(new Verb("finir").setType(VerbType.HUMANS)
+				.setPresent("finis", "finis", "finit", "finissons", "finissez", "finissent")
+				.setImparfait("finissais", "finissais", "finissait", "finissions", "finissiez", "finissaient"));
+		VerbList.verbs.add(new Verb("faire").setType(VerbType.HUMANS)
+				.setPresent("fais", "fais", "fait", "faisons", "faites", "font")
+				.setImparfait("faisais", "faisais", "faisait", "faisions", "faisiez", "faisaient"));
+		VerbList.verbs.add(new Verb("courir").setType(VerbType.HUMANS, VerbType.ANIMALS)
+				.setPresent("cours", "cours", "court", "courons", "courez", "courent")
+				.setImparfait("courais", "courais", "courait", "courions", "couriez", "couraient"));
+		VerbList.verbs.add(new Verb("mettre").setType(VerbType.HUMANS)
+				.setPresent("met", "mets", "met", "mettons", "mettez", "mettent")
+				.setImparfait("mettais", "mettais", "mettait", "mettions", "mettiez", "mettaient"));
+		VerbList.verbs.add(new Verb("écouter").setType(VerbType.HUMANS, VerbType.ANIMALS)
+				.setPresent("écoute", "écoutes", "écoute", "écoutons", "écoutez", "écoutent")
+				.setImparfait("écoutais", "écoutais", "écoutait", "écoutions", "écoutiez", "écoutaient"));
+		VerbList.verbs.add(new Verb("avancer").setType(VerbType.HUMANS, VerbType.ANIMALS, VerbType.ENVIRONNEMENT)
+				.setPresent("avance", "avances", "avance", "avançons", "avancez", "avancent")
+				.setImparfait("avançais", "avançais", "avançait", "avancions", "avanciez", "avançaient"));
+		VerbList.verbs.add(new Verb("passe").setType(VerbType.UNPHYSIC)
+				.setPresent("passe", "passes", "passe", "passons", "passez", "passent")
+				.setImparfait("passais", "passais", "passait", "passions", "passiez", "passaient"));
+		VerbList.verbs.add(new Verb("planer").setType((VerbType[]) null)
+				.setPresent("plane", "planes", "plane", "planons", "planez", "planent")
+				.setImparfait("planais", "planais", "planait", "planions", "planiez", "planaient"));
+		VerbList.verbs.add(new Verb("se jouer").setType((VerbType[]) null)
+				.setPresent("me joue", "te joues", "se joue", "nous jouons", "vous jouez", "se jouent")
+				.setImparfait("me jouais", "te jouais", "se jouaite", "nous jouions", "vous jouiez", "se jouaient"));
+		VerbList.verbs.add(new Verb("fuir").setType(VerbType.HUMANS, VerbType.ANIMALS)
+				.setPresent("fuis", "fuis", "fuit", "fuyons", "fuyez", "fuient")
+				.setImparfait("fuyais", "fuyais", "fuyait", "fuyions", "fuyiez", "fuyaient"));
+		VerbList.verbs.add(new Verb("couler").setType((VerbType[]) null)
+				.setPresent("coule", "coules", "coule", "coulons", "coulez", "coulent")
+				.setImparfait("coulais", "coulais", "coulait", "coulions", "couliez", "coulaient"));
+	}
+}
