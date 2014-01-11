@@ -1,0 +1,7 @@
+package fr;
+
+public enum Genre 
+{
+	MASC,
+	FEM;
+}
