@@ -1,0 +1,22 @@
+package fr;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class VerbList 
+{
+	public static List<Verb> verbs = new ArrayList<Verb>();
+	
+	public static Verb getVerbByName(String s)
+	{
+		for(Verb v : verbs)
+		{
+			if(v.verb.equals(s))
+			{
+				return v;
+			}
+		}
+		
+		return null;
+	}
+}
