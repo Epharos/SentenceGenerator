@@ -1,0 +1,12 @@
+package fr;
+
+public enum VerbType 
+{
+	ANIMALS,
+	HUMANS,
+	BUILDINGS,
+	OBJECTS,
+	UNPHYSIC,
+	ENVIRONNEMENT,
+	;
+}
