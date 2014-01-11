@@ -1,0 +1,109 @@
+package fr;
+
+import java.util.*;
+
+public class Subject extends Word
+{
+	public static List<Subject> subjects = new ArrayList<Subject>();
+	public String name;
+	public Genre genre;
+	public VerbType[] type = { VerbType.OBJECTS };
+	public boolean differentPluriel = false;
+	public String theDifferentPluriel = null;
+	public String[] exeptedVerbAllowed, exeptedVerbNotAllowed;
+	
+	public Subject(String subject, Genre genre)
+	{
+		this.name = subject;
+		this.genre = genre;
+	}
+	
+	public Subject setType(VerbType ... vt)
+	{
+		this.type = vt;
+		return this;
+	}
+	
+	public Subject isDifferentPluriel(boolean pluriel, String end)
+	{
+		this.differentPluriel = pluriel;
+		this.theDifferentPluriel = end;
+		return this;
+	}
+	
+	public Subject addExeptedVerbsAllowed(String ... v)
+	{
+		this.exeptedVerbAllowed = v;
+		return this;
+	}
+	
+	public Subject addExeptedVerbsNotAllowed(String ... v)
+	{
+		this.exeptedVerbNotAllowed = v;
+		return this;
+	}
+	
+	public static void registerSubjects()
+	{
+		subjects.add(new Subject("chat", Genre.MASC).setType(VerbType.ANIMALS));
+		subjects.add(new Subject("chien", Genre.MASC).setType(VerbType.ANIMALS));
+		subjects.add(new Subject("maison", Genre.FEM).setType(VerbType.BUILDINGS));
+		subjects.add(new Subject("livre", Genre.MASC));
+		subjects.add(new Subject("nuage", Genre.MASC).setType(VerbType.ENVIRONNEMENT));
+		subjects.add(new Subject("musique", Genre.FEM).setType((VerbType[]) null).addExeptedVerbsAllowed("se jouer"));
+		subjects.add(new Subject("garçon", Genre.MASC).setType(VerbType.HUMANS));
+		subjects.add(new Subject("fille", Genre.FEM).setType(VerbType.HUMANS));
+		subjects.add(new Subject("oiseau", Genre.MASC).setType(VerbType.ANIMALS).isDifferentPluriel(true, "x"));
+		subjects.add(new Subject("eau", Genre.FEM).setType(VerbType.ENVIRONNEMENT).isDifferentPluriel(true, "x").addExeptedVerbsAllowed("couler"));
+		subjects.add(new Subject("heure", Genre.FEM).setType(VerbType.UNPHYSIC));
+		subjects.add(new Subject("stylo", Genre.MASC).setType(VerbType.OBJECTS).addExeptedVerbsAllowed("couler", "fuir"));
+		subjects.add(new Subject("air", Genre.FEM).setType(VerbType.ENVIRONNEMENT));
+		subjects.add(new Subject("avion", Genre.MASC).setType((VerbType[]) null).addExeptedVerbsAllowed("planer"));
+	}
+	
+	public static Subject getRandomSubject()
+	{
+		Random rand = new Random();
+		
+		return subjects.get(rand.nextInt(subjects.size()));
+	}
+	
+	public String getSubjectName(boolean isPluriel)
+	{
+		return this.name + (isPluriel ? (this.differentPluriel ? this.theDifferentPluriel : "s") : "");
+	}
+	
+	public String theA(Random r, boolean isPluriel, String followingWord)
+	{
+		boolean b = r.nextBoolean();
+		boolean voyelle = Logic.startWithVoyelle(followingWord);
+		
+		if(isPluriel)
+		{
+			if(b)
+			{
+				return "les ";
+			}
+			else
+			{
+				return "des ";
+			}
+		}
+		else
+		{
+			if(b)
+			{
+				return this.genre == Genre.MASC ? (voyelle ? "l\'" : "le ") : (voyelle ? "l\'" : "la ");
+			}
+			else
+			{
+				return this.genre == Genre.MASC ? "un " : "une ";
+			}
+		}
+	}
+	
+	public String getSubject(boolean isPluriel)
+	{
+		return this.theA(new Random(), isPluriel, "") + this.getSubjectName(isPluriel);
+	}
+}
