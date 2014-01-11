@@ -1,0 +1,29 @@
+package fr;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class Determinant extends Word
+{
+	public static final List<String> determinants = new ArrayList<String>();
+	
+	public Determinant()
+	{
+		determinants.add("je");
+		determinants.add("tu");
+		determinants.add("il");
+		determinants.add("elle");
+		determinants.add("on");
+		determinants.add("nous");
+		determinants.add("vous");
+		determinants.add("ils");
+		determinants.add("elles");
+	}
+	
+	public String getDeterminant()
+	{
+		Random rand = new Random();
+		return determinants.get(rand.nextInt(determinants.size()));
+	}
+}
