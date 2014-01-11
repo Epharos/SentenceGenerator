@@ -1,0 +1,9 @@
+package fr;
+
+public class Logic 
+{
+	public static boolean startWithVoyelle(String s)
+	{
+		return s.startsWith("a") || s.startsWith("e") || s.startsWith("i") || s.startsWith("o") || s.startsWith("u") || s.startsWith("y") || s.startsWith("h") || s.startsWith("é") || s.startsWith("è") || s.startsWith("î") || s.startsWith("ê");
+	}
+}
