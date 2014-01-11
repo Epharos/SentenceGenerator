@@ -1,0 +1,57 @@
+package fr;
+
+import java.util.*;
+
+public class SentenceFormat 
+{
+	public List<String> words = new ArrayList<String>();
+	
+	public SentenceFormat(String s)
+	{
+		String[] s1 = new String[512];
+		
+		int a = 0;
+		int lastChar = 0;
+		
+		for(int i = 0 ; i < s.length() ; i++)
+		{
+			if(s.charAt(i) == ' ')
+			{
+				s1[a] = s.substring(lastChar, i);
+				a++;
+				lastChar = i + 1;
+			}
+			
+			if(i >= s.length() - 1)
+			{
+				s1[a] = s.substring(lastChar, i + 1);
+			}
+		}
+	}
+	
+	public void format(String[] s)
+	{
+		Random rand = new Random();
+		
+		for(int i = 0 ; i < s.length ; i++)
+		{
+			if(s[i] != null)
+			{
+				Determinant d = new Determinant();
+				String det = null;
+				
+				switch(s[i])
+				{
+				case "determinant" :
+					d = new Determinant();
+					det = d.getDeterminant();
+					words.add(d.getDeterminant());
+					break;
+				case "verbe" :
+					words.add(VerbList.verbs.get(rand.nextInt(VerbList.verbs.size())).getPresent(det, rand.nextBoolean()));
+					break;
+				}
+			}
+		}
+	}
+}
